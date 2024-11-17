@@ -1,0 +1,10 @@
+repo_url: "https://github.com/mdn/django-locallibrary-tutorial"
+app_dest: "/opt/django-local-library"
+
+python_version: "python3"
+pip_version: "python3-pip"
+
+docker_image: "timurbabs/django"
+docker_container: "django_local_library"
+docker_ports:
+  - "8000:8000"

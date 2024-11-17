@@ -1,0 +1,48 @@
+---
+- hosts: app
+  become: true
+  tasks:
+    - name: Aptitude | Install aptitude
+      ansible.builtin.apt:
+        name: aptitude
+        state: latest
+        update_cache: true
+
+- hosts: app
+  gather_facts: no 
+  become: true
+  roles:
+    - docker
+
+- hosts: app
+  gather_facts: no
+  become: true
+  tasks:
+    - name: Django-LocalLibrary | Ensure git is Installed
+      ansible.builtin.package:
+        name: git
+        state: present
+
+    - name: Django-LocalLibrary | Ensure Docker SDK for Python is Installed
+      ansible.builtin.pip:
+        name: docker
+        state: present
+
+    - name: Django-LocalLibrary | Clone the Django Local Library Repository
+      ansible.builtin.git:
+        repo: "{{ repo_url }}"
+        dest: "{{ app_dest }}"
+        update: yes
+
+    - name: Django-LocalLibrary | Pull Docker image
+      ansible.builtin.docker_image:
+        name: "{{ docker_image }}"
+        source: pull
+
+    - name: Django-LocalLibrary | Start Docker Container
+      ansible.builtin.docker_container:
+        name: "{{ docker_container }}"
+        image: "{{ docker_image }}"
+        state: started
+        ports: "{{ docker_ports }}"
+        restart_policy: always

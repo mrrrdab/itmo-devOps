@@ -1,0 +1,5 @@
+- src: https://gitlab.com/ansible-roles-mrrrdab/ansible-role-docker
+  scm: git
+  version: origin/master
+  name: docker
+
