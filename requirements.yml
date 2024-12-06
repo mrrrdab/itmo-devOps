@@ -3,3 +3,7 @@
   version: origin/master
   name: docker
 
+- src: https://gitlab.com/ansible-roles-mrrrdab/ansible-role-nginx
+  scm: git
+  version: origin/main
+  name: nginx

@@ -1,0 +1,6 @@
+repo_url: https://github.com/mdn/django-locallibrary-tutorial.git
+repo_dest: /opt/django-locallibrary
+django_servers:
+  - 192.168.56.201:8000
+static_path: /opt/django-locallibrary/catalog/static/
+worker_connections: 1024

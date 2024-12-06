@@ -1,12 +1,16 @@
 ---
-- hosts: app
-  become: true
+- hosts: all
+  become: yes
   tasks:
     - name: Aptitude | Install aptitude
       ansible.builtin.apt:
         name: aptitude
         state: latest
-        update_cache: true
+        update_cache: yes
+    - name: Pip3 | Ensure pip is Installed
+      ansible.builtin.package:
+        name: python3-pip
+        state: present
 
 - hosts: app
   gather_facts: no 
@@ -16,7 +20,7 @@
 
 - hosts: app
   gather_facts: no
-  become: true
+  become: yes
   tasks:
     - name: Django-LocalLibrary | Ensure git is Installed
       ansible.builtin.package:
@@ -46,3 +50,20 @@
         state: started
         ports: "{{ docker_ports }}"
         restart_policy: always
+
+- hosts: web
+  gather_facts: no
+  become: yes  
+  roles:
+    - nginx
+  tasks:
+    - name: Django-LocalLibrary | Ensure git is Installed
+      ansible.builtin.package:
+        name: git
+        state: present
+
+    - name: Django-LocalLibrary | Clone the Django Locallibrary repository
+      git:
+        repo: "{{ repo_url }}"
+        dest: "{{ repo_dest }}"
+        update: yes
