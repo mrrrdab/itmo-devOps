@@ -12,58 +12,64 @@
         name: python3-pip
         state: present
 
-- hosts: app
-  gather_facts: no 
-  become: true
-  roles:
-    - docker
+# - hosts: app
+#   gather_facts: no 
+#   become: true
+#   roles:
+#     - docker
 
-- hosts: app
-  gather_facts: no
+# - hosts: app
+#   gather_facts: no
+#   become: yes
+#   tasks:
+#     - name: Django-LocalLibrary | Ensure git is Installed
+#       ansible.builtin.package:
+#         name: git
+#         state: present
+
+#     - name: Django-LocalLibrary | Ensure Docker SDK for Python is Installed
+#       ansible.builtin.pip:
+#         name: docker
+#         state: present
+
+#     - name: Django-LocalLibrary | Clone the Django Local Library Repository
+#       ansible.builtin.git:
+#         repo: "{{ repo_url }}"
+#         dest: "{{ app_dest }}"
+#         update: yes
+
+#     - name: Django-LocalLibrary | Pull Docker image
+#       ansible.builtin.docker_image:
+#         name: "{{ docker_image }}"
+#         source: pull
+
+#     - name: Django-LocalLibrary | Start Docker Container
+#       ansible.builtin.docker_container:
+#         name: "{{ docker_container }}"
+#         image: "{{ docker_image }}"
+#         state: started
+#         ports: "{{ docker_ports }}"
+#         restart_policy: always
+
+# - hosts: web
+#   gather_facts: no
+#   become: yes  
+#   roles:
+#     - nginx
+#   tasks:
+#     - name: Django-LocalLibrary | Ensure git is Installed
+#       ansible.builtin.package:
+#         name: git
+#         state: present
+
+#     - name: Django-LocalLibrary | Clone the Django Locallibrary repository
+#       git:
+#         repo: "{{ repo_url }}"
+#         dest: "{{ repo_dest }}"
+#         update: yes
+
+- hosts: all
+  name: Setup OpenVPN server
   become: yes
-  tasks:
-    - name: Django-LocalLibrary | Ensure git is Installed
-      ansible.builtin.package:
-        name: git
-        state: present
-
-    - name: Django-LocalLibrary | Ensure Docker SDK for Python is Installed
-      ansible.builtin.pip:
-        name: docker
-        state: present
-
-    - name: Django-LocalLibrary | Clone the Django Local Library Repository
-      ansible.builtin.git:
-        repo: "{{ repo_url }}"
-        dest: "{{ app_dest }}"
-        update: yes
-
-    - name: Django-LocalLibrary | Pull Docker image
-      ansible.builtin.docker_image:
-        name: "{{ docker_image }}"
-        source: pull
-
-    - name: Django-LocalLibrary | Start Docker Container
-      ansible.builtin.docker_container:
-        name: "{{ docker_container }}"
-        image: "{{ docker_image }}"
-        state: started
-        ports: "{{ docker_ports }}"
-        restart_policy: always
-
-- hosts: web
-  gather_facts: no
-  become: yes  
   roles:
-    - nginx
-  tasks:
-    - name: Django-LocalLibrary | Ensure git is Installed
-      ansible.builtin.package:
-        name: git
-        state: present
-
-    - name: Django-LocalLibrary | Clone the Django Locallibrary repository
-      git:
-        repo: "{{ repo_url }}"
-        dest: "{{ repo_dest }}"
-        update: yes
+    - openvpn
