@@ -1,0 +1,9 @@
+client_configs_volume: "/mnt/c/Users/sahab/Desktop/dev_ops_4/client_configs"
+
+easyrsa_req_country: "RU"
+easyrsa_req_province: "Москва"
+easyrsa_req_city: "Москва"
+easyrsa_req_org: "МояОрганизация"
+easyrsa_req_email: "admin@moiaorganizatsiia.ru"
+easyrsa_req_ou: "МойОтдел"
+easyrsa_req_cn: "Easy-RSA CA"
